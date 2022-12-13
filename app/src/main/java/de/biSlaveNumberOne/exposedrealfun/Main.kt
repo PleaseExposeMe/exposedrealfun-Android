@@ -616,7 +616,7 @@ class Main : AppCompatActivity() {
 
         bottomSheetDialog.findViewById<LinearLayout>(R.id.getTheUpdate)
             ?.setOnClickListener(View.OnClickListener {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/exposedrealfunApp/exposedrealfun-Android"))
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/MobileAppDev451/exposedrealfun-Android"))
                 startActivity(browserIntent)
                 bottomSheetDialog.dismiss()
             })
