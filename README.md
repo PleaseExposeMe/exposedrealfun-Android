@@ -45,27 +45,21 @@ The most important functions:
     <th class="tg-0lax">
         <p>Post</p>
         </th>
-          <th class="tg-0lax">
-        <p>Notifications</p>
-        </th>
   </tr>
 </thead>
 <tbody>
   <tr>
     <td class="tg-0lax">
-    <img src="https://github.com/exxxposeApp/exxxpose-Android/raw/main/screenshots/Screenshot_1.jpg" width="250px">
+    <img src="https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/screenshots/Screenshot_1.jpg" width="250px">
     </td>
     <td class="tg-0lax">
-    <img src="https://github.com/exxxposeApp/exxxpose-Android/raw/main/screenshots/Screenshot_2.jpg" width="250px">
+    <img src="https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/screenshots/Screenshot_2.jpg" width="250px">
     </td>
     <td class="tg-0lax">
-    <img src="https://github.com/exxxposeApp/exxxpose-Android/raw/main/screenshots/Screenshot_3.jpg" width="250px">
+    <img src="https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/screenshots/Screenshot_3.jpg" width="250px">
     </td>
     <td class="tg-0lax">
-    <img src="https://github.com/exxxposeApp/exxxpose-Android/raw/main/screenshots/Screenshot_4.png" width="250px">
-    </td>
-      <td class="tg-0lax">
-    <img src="https://github.com/exxxposeApp/exxxpose-Android/raw/main/screenshots/Screenshot_5.jpg" width="250px">
+    <img src="https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/screenshots/Screenshot_4.jpg" width="250px">
     </td>
   </tr>
 </tbody>
