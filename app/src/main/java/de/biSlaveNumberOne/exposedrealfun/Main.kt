@@ -437,7 +437,7 @@ class Main : AppCompatActivity() {
             val thread = Thread {
                 try {
                     val versionCode = BuildConfig.VERSION_CODE
-                    val json = Request().run("http://exposedrealfun-extend.bplaced.net/api/getCurrentAppVersion/")
+                    val json = Request().run("http://exxxpose-extend.bplaced.net/api/getCurrentAppVersion/")
 
                     val result = Klaxon()
                         .parse<Data>(json)
