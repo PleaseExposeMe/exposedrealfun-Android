@@ -134,6 +134,8 @@ class Viewer : AppCompatActivity() {
 
                 if (url == "https://www.exposedrealfun.com/") {
                     finish()
+                }else if(url.contains("/download")){
+                    //download the image
                 }
                 else {
                       if (!firstLoad) {

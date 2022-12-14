@@ -49,7 +49,7 @@ class Main : AppCompatActivity() {
     var disableOnClickEvents = false
     var isUpdateAvailible = false
     var urlBeforeError = ""
-    var searchState = false;
+    var searchState = false
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
@@ -82,6 +82,7 @@ class Main : AppCompatActivity() {
                 webview.loadUrl(urlBeforeError)
             }else{
                 webview.reload()
+                searchState = false
             }
             refresh.isRefreshing = false
         }
@@ -489,6 +490,7 @@ class Main : AppCompatActivity() {
                             webview.visibility = View.INVISIBLE;
 
                             webview.loadUrl("https://www.exposedrealfun.com/")
+                            searchState = false
                         }else{
                             updateURLBeforeError()
                             webview.loadUrl("file:///android_asset/noconnection.html")
@@ -515,6 +517,22 @@ class Main : AppCompatActivity() {
                             startActivity(intent)
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                             bottomSheetDialog.dismiss()
+                        })
+                    bottomSheetDialog.findViewById<LinearLayout>(R.id.terms)
+                        ?.setOnClickListener(View.OnClickListener {
+                            loadViewer("https://www.exposedrealfun.com/terms")
+                        })
+
+                    bottomSheetDialog.findViewById<LinearLayout>(R.id.faq)
+                        ?.setOnClickListener(View.OnClickListener {
+                            loadViewer("https://www.exposedrealfun.com/faq")
+                        })
+
+                    bottomSheetDialog.findViewById<LinearLayout>(R.id.discord)
+                        ?.setOnClickListener(View.OnClickListener {
+                            val browserIntent =
+                                Intent(Intent.ACTION_VIEW, Uri.parse("https://discord.gg/E4bNcsJGs3"))
+                            startActivity(browserIntent)
                         })
 
 
@@ -551,6 +569,7 @@ class Main : AppCompatActivity() {
                             webview.visibility = View.INVISIBLE;
 
                             webview.loadUrl("https://www.exposedrealfun.com/fag-of-the-day")
+                            searchState = false
                         }else{
                             updateURLBeforeError()
                             webview.loadUrl("file:///android_asset/noconnection.html")
