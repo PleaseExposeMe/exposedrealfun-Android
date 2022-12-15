@@ -327,7 +327,7 @@ class Main : AppCompatActivity() {
 
                 webview.visibility = View.INVISIBLE;
 
-                if(url == "https://www.exposedrealfun.com/"){
+                if(url == "https://www.exposedrealfun.com/" || url?.startsWith("https://www.exposedrealfun.com/?") == true){
                     disableOnClickEvents = true
                     bottomNavigationView.selectedItemId = R.id.home
                     disableOnClickEvents = false
@@ -352,8 +352,6 @@ class Main : AppCompatActivity() {
                             + jsHeader +
                             "})()"
                 )
-
-
 
 
                 Handler(Looper.getMainLooper()).postDelayed(
@@ -521,18 +519,28 @@ class Main : AppCompatActivity() {
                     bottomSheetDialog.findViewById<LinearLayout>(R.id.terms)
                         ?.setOnClickListener(View.OnClickListener {
                             loadViewer("https://www.exposedrealfun.com/terms")
+                            bottomSheetDialog.dismiss()
                         })
 
                     bottomSheetDialog.findViewById<LinearLayout>(R.id.faq)
                         ?.setOnClickListener(View.OnClickListener {
                             loadViewer("https://www.exposedrealfun.com/faq")
+                            bottomSheetDialog.dismiss()
                         })
 
                     bottomSheetDialog.findViewById<LinearLayout>(R.id.discord)
                         ?.setOnClickListener(View.OnClickListener {
-                            val browserIntent =
-                                Intent(Intent.ACTION_VIEW, Uri.parse("https://discord.gg/E4bNcsJGs3"))
+                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://discord.gg/E4bNcsJGs3"))
                             startActivity(browserIntent)
+                            bottomSheetDialog.dismiss()
+                        })
+
+                    bottomSheetDialog.findViewById<LinearLayout>(R.id.about)
+                        ?.setOnClickListener(View.OnClickListener {
+                            val intent = Intent(this, About::class.java)
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                            bottomSheetDialog.dismiss()
                         })
 
 

@@ -521,16 +521,6 @@ class Viewer : AppCompatActivity() {
         floatingActionButton.setColorFilter(Color.parseColor("#8C8C8C"));
     }
 
-    fun reload(){
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-
-                webview.reload();
-            },
-            300 // value in milliseconds
-        )
-    }
-
     fun sharePost(){
         val i = Intent(Intent.ACTION_SEND)
         i.type = "text/plain"

@@ -19,23 +19,30 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="de.biSlaveNumberOne.exposedrealfun.History"
+            android:name=".About"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".History"
             android:exported="false" />
         <activity
-            android:name="de.biSlaveNumberOne.exposedrealfun.Bookmarks"
+            android:name=".Bookmarks"
             android:exported="false" />
         <activity
-            android:name="de.biSlaveNumberOne.exposedrealfun.Viewer"
+            android:name=".Viewer"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="de.biSlaveNumberOne.exposedrealfun.Main"
+            android:name=".Main"
             android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
+            tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="de.biSlaveNumberOne.exposedrealfun.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
