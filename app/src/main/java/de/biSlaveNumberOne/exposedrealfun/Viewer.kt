@@ -425,6 +425,8 @@ class Viewer : AppCompatActivity() {
         //Check Internet Connection
         val webViewhelper = WebViewHelper()
         if(webViewhelper.isOnline(applicationContext)){
+            val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+            progressBar.visibility = View.VISIBLE
             //Load site
             webview.loadUrl(url)
         }else{

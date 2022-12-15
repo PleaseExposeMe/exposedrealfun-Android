@@ -57,15 +57,15 @@ class Main : AppCompatActivity() {
 
         //File Upload
         if (requestCode == REQUEST_SELECT_FILE) {
-                if (uploadMessage == null) return
-                uploadMessage!!.onReceiveValue(
-                    WebChromeClient.FileChooserParams.parseResult(
-                        resultCode,
-                        intent
-                    )
+            if (uploadMessage == null) return
+            uploadMessage!!.onReceiveValue(
+                WebChromeClient.FileChooserParams.parseResult(
+                    resultCode,
+                    intent
                 )
-                uploadMessage = null
-            }
+            )
+            uploadMessage = null
+        }
     }
 
     @Serializable
@@ -163,22 +163,22 @@ class Main : AppCompatActivity() {
                 if (url == "https://www.exposedrealfun.com/") {
                     bottomNavigationView.selectedItemId = R.id.home
                 } else
-                if (url.startsWith("https://www.exposedrealfun.com/?")) {
+                    if (url.startsWith("https://www.exposedrealfun.com/?")) {
 
-                } else
-                if (url.startsWith("https://www.exposedrealfun.com/post/clear.php")) {
-                    Handler(Looper.getMainLooper()).postDelayed(
+                    } else
+                        if (url.startsWith("https://www.exposedrealfun.com/post/clear.php")) {
+                            Handler(Looper.getMainLooper()).postDelayed(
+                                {
+                                    bottomNavigationView.selectedItemId = R.id.more
+                                },
+                                300 // value in milliseconds
+                            )
+                        }else
                         {
-                            bottomNavigationView.selectedItemId = R.id.more
-                        },
-                        300 // value in milliseconds
-                    )
-                }else
-                 {
-                    loadViewer(url)
-                    webview.stopLoading()
-                    return false
-                }
+                            loadViewer(url)
+                            webview.stopLoading()
+                            return false
+                        }
 
                 //Open special links
                 if (url.startsWith("mailto:")) {
@@ -383,23 +383,23 @@ class Main : AppCompatActivity() {
             val filename = URLUtil.guessFileName(url, contentDisposition, mimetype)
 
 
-                val request = DownloadManager.Request(
-                    Uri.parse(url)
-                )
-                request.allowScanningByMediaScanner()
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                request.setTitle("Image Download") //Notify client once download is completed!
-                request.setDestinationInExternalPublicDir(
-                    Environment.DIRECTORY_DOWNLOADS,
-                    "exposedrealfun_files/$filename"
-                )
-                val dm = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-                dm.enqueue(request)
-                Toast.makeText(
-                    applicationContext,
-                    "Downloading Image",  //To notify the Client that the file is being downloaded
-                    Toast.LENGTH_LONG
-                ).show()
+            val request = DownloadManager.Request(
+                Uri.parse(url)
+            )
+            request.allowScanningByMediaScanner()
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            request.setTitle("Image Download") //Notify client once download is completed!
+            request.setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                "exposedrealfun_files/$filename"
+            )
+            val dm = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+            dm.enqueue(request)
+            Toast.makeText(
+                applicationContext,
+                "Downloading Image",  //To notify the Client that the file is being downloaded
+                Toast.LENGTH_LONG
+            ).show()
         })
 
 
@@ -430,6 +430,8 @@ class Main : AppCompatActivity() {
         //Check Internet Connection
         val webViewhelper = WebViewHelper()
         if(webViewhelper.isOnline(applicationContext)){
+            val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+            progressBar.visibility = View.VISIBLE
             //Load site
             webview.loadUrl("https://www.exposedrealfun.com/")
 
@@ -460,12 +462,12 @@ class Main : AppCompatActivity() {
             //Check if a update is available
             Handler(Looper.getMainLooper()).postDelayed(
                 {
-                   /* while (true){
-                        if(isUpdateAvailible){
-                            showUpdatePopup()
-                            return@postDelayed
-                        }
-                    }*/
+                    /* while (true){
+                         if(isUpdateAvailible){
+                             showUpdatePopup()
+                             return@postDelayed
+                         }
+                     }*/
                     if(isUpdateAvailible){
                         showUpdatePopup()
                     }
@@ -611,14 +613,14 @@ class Main : AppCompatActivity() {
         val url = webview.url
 
 
-            //Update bottom nav
+        //Update bottom nav
 
-            if(url == "https://www.exposedrealfun.com/" || url?.startsWith("https://www.exposedrealfun.com/?") == true){
-                val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-                disableOnClickEvents = true
-                bottomNavigationView.selectedItemId = R.id.home
-                disableOnClickEvents = false
-            }
+        if(url == "https://www.exposedrealfun.com/" || url?.startsWith("https://www.exposedrealfun.com/?") == true){
+            val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            disableOnClickEvents = true
+            bottomNavigationView.selectedItemId = R.id.home
+            disableOnClickEvents = false
+        }
 
         if(url == "https://www.exposedrealfun.com/fag-of-the-day"){
             val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
