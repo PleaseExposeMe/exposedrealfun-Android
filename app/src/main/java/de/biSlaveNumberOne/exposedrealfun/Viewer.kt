@@ -314,7 +314,7 @@ class Viewer : AppCompatActivity() {
                 CookieManager.getInstance().flush()
 
                 //JavaScript/CSS injection mobile header
-                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}" //your css as String
+                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.d-flex { overflow: auto; }" //your css as String
 
                 //JavaScript/CSS injection mobile header
                 val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +

@@ -81,6 +81,9 @@ class Main : AppCompatActivity() {
             if(webview.url == "file:///android_asset/noconnection.html"){
                 webview.loadUrl(urlBeforeError)
             }else{
+                val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.visibility = View.VISIBLE
+                webview.visibility = View.INVISIBLE
                 webview.reload()
                 searchState = false
             }
@@ -99,7 +102,7 @@ class Main : AppCompatActivity() {
         when (applicationContext.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 if(WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                    WebSettingsCompat.setForceDark(webview.settings, WebSettingsCompat.FORCE_DARK_ON);
+                    WebSettingsCompat.setForceDark(webview.settings, WebSettingsCompat.FORCE_DARK_ON)
                 }
                 webview.setBackgroundColor(Color.parseColor("#212121"))
             }
@@ -123,7 +126,7 @@ class Main : AppCompatActivity() {
                 jsHeader = "document.getElementsByClassName('erf-search')[0].style.display = 'none';"
                 searchState = false
             }else{
-                jsHeader = "document.getElementsByClassName('erf-search')[0].style.display = 'flex';window.scrollTo(0, 0);"
+                jsHeader = "document.getElementsByClassName('erf-search')[0].style.display = 'flex';"
                 searchState = true
             }
             webview.loadUrl(
@@ -158,7 +161,7 @@ class Main : AppCompatActivity() {
                 }
 
                 if (url == "https://www.exposedrealfun.com/") {
-                    bottomNavigationView.selectedItemId = R.id.home;
+                    bottomNavigationView.selectedItemId = R.id.home
                 } else
                 if (url.startsWith("https://www.exposedrealfun.com/?")) {
 
@@ -325,7 +328,7 @@ class Main : AppCompatActivity() {
                 val progressBar = findViewById<ProgressBar>(R.id.progressBar)
                 progressBar.visibility = View.VISIBLE
 
-                webview.visibility = View.INVISIBLE;
+                webview.visibility = View.INVISIBLE
 
                 if(url == "https://www.exposedrealfun.com/" || url?.startsWith("https://www.exposedrealfun.com/?") == true){
                     disableOnClickEvents = true
@@ -343,7 +346,7 @@ class Main : AppCompatActivity() {
 
 
                 //JavaScript/CSS injection mobile header
-                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}" //your css as String
+                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}.d-flex { overflow: auto; } /*custom-search-bar*/ .erf-search { position: fixed; left: 0; top: 0; right: 0; background-color: #ffffff; z-index: 99999; padding: 20px; box-shadow: 1px 1px 11px 2px #000000a8; } /*custom-search-bar end*/" //your css as String
                 val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
                         "document.getElementsByTagName('nav')[0].style.display = 'none';" +
                         "document.head.appendChild(style);"
@@ -485,7 +488,7 @@ class Main : AppCompatActivity() {
                             //Load site
                             val progressBar = findViewById<ProgressBar>(R.id.progressBar)
                             progressBar.visibility = View.VISIBLE
-                            webview.visibility = View.INVISIBLE;
+                            webview.visibility = View.INVISIBLE
 
                             webview.loadUrl("https://www.exposedrealfun.com/")
                             searchState = false
@@ -574,7 +577,7 @@ class Main : AppCompatActivity() {
                             //Load site
                             val progressBar = findViewById<ProgressBar>(R.id.progressBar)
                             progressBar.visibility = View.VISIBLE
-                            webview.visibility = View.INVISIBLE;
+                            webview.visibility = View.INVISIBLE
 
                             webview.loadUrl("https://www.exposedrealfun.com/fag-of-the-day")
                             searchState = false
