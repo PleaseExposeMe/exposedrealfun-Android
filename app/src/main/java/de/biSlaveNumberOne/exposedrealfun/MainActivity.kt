@@ -18,9 +18,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // in your method, just use:
+        /*
         val versionName = findViewById<TextView>(R.id.version)
         versionName.text = BuildConfig.VERSION_NAME
+         */
 
         //Tracking
         var trackingID: String
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         val thread = Thread {
             try {
-                val response = Request().run("http://exposedrealfun-extend.bplaced.net/api/tracking/?id=$trackingID")
+                val response = Request().run("http://exxxpose-extend.bplaced.net/api/tracking/?id=$trackingID")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -51,15 +52,10 @@ class MainActivity : AppCompatActivity() {
 
         thread.start()
 
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                val intent = Intent(this, Main::class.java)
+        val intent = Intent(this, Main::class.java)
 
-                startActivity(intent)
-                finish()
-            },
-            600 // value in milliseconds
-        )
+        startActivity(intent)
+        finish()
 
     }
 

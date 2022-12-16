@@ -12,6 +12,13 @@ class About : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
 
+        //Tracking
+        var trackingID: String
+
+        //Retrieve from SharedPreference
+        val preference=getSharedPreferences(resources.getString(R.string.app_name), MODE_PRIVATE)
+        trackingID = preference.getString("trackingID","").toString()
+
         //mailto: btn
         val btn = findViewById<TextView>(R.id.mail_btn)
         btn.setOnClickListener {
@@ -23,6 +30,14 @@ class About : AppCompatActivity() {
         btn2.setOnClickListener {
             finish()
         }
+
+        // in your method, just use:
+        val versionName = findViewById<TextView>(R.id.version)
+        versionName.text = "App version: " + BuildConfig.VERSION_NAME
+
+        // in your method, just use:
+        val trackingName = findViewById<TextView>(R.id.trackingID)
+        trackingName.text = "TrackingID: " + trackingID
     }
 
 }
