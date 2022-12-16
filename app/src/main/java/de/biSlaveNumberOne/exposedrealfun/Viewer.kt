@@ -344,6 +344,22 @@ class Viewer : AppCompatActivity() {
                     )
                 }
 
+                if (url?.startsWith("https://www.exposedrealfun.com/post/") == true && url.contains("/edit/")) {
+                    Handler(Looper.getMainLooper()).postDelayed(
+                        {
+                            //New history entry
+                            if(!disableHistory){
+                                val history = SQLlite(applicationContext, null)
+
+                                title = "!!!Your Post Settings!!!"
+
+                                history.addHistoryEntry(url,title)
+                            }
+                        },
+                        600 // value in milliseconds
+                    )
+                }
+
                 Handler(Looper.getMainLooper()).postDelayed(
                     {
                         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
