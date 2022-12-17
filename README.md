@@ -2,8 +2,8 @@
 An unofficial app for exposedrealfun.com for Android
 
 # Download
-
-Free download for Android: [Download](https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/exposedrealfun.com.apk)
+Free download for Android:<br>
+[![Download](https://camo.githubusercontent.com/21c7f749956051a67b3c4d75ea771fd6a052dbdf04ea29341e3e8788f6f28134/68747470733a2f2f637573746f6d2d69636f6e2d6261646765732e6865726f6b756170702e636f6d2f62616467652f2d446f776e6c6f61642d626c75653f7374796c653d666f722d7468652d6261646765266c6f676f3d646f776e6c6f6164266c6f676f436f6c6f723d7768697465)](https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/exposedrealfun.com.apk)<br><br>
 
 # FAQ
 
