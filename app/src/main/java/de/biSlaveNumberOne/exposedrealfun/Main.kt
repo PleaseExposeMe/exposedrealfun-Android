@@ -162,7 +162,12 @@ class Main : AppCompatActivity() {
 
                 if (url == "https://www.exposedrealfun.com/") {
                     bottomNavigationView.selectedItemId = R.id.home
-                } else
+                }else
+                    if (url.startsWith("https://www.exposedrealfun.com/?q=")) {
+                        loadViewer(url)
+                        webview.stopLoading()
+                        return false
+                    } else
                     if (url.startsWith("https://www.exposedrealfun.com/?")) {
 
                     } else
@@ -496,6 +501,7 @@ class Main : AppCompatActivity() {
 
                             webview.loadUrl("https://www.exposedrealfun.com/")
                             searchState = false
+                            webview.clearHistory()
                         }else{
                             updateURLBeforeError()
                             webview.loadUrl("file:///android_asset/noconnection.html")
@@ -635,12 +641,22 @@ class Main : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        AlertDialog.Builder(this)
-            .setTitle("Really Exit?")
-            .setMessage("Are you sure you want to exit?")
-            .setNegativeButton("No", null)
-            .setPositiveButton("Yes"
-            ) { _, _ -> super@Main.onBackPressed() }.create().show()
+        var bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        if(webview.canGoBack()){
+            webview.goBack()
+        }else if(webview.url == "https://www.exposedrealfun.com/fag-of-the-day"){
+            bottomNavigationView.selectedItemId = R.id.home
+            webview.clearHistory()
+        }
+        else{
+            AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton("No", null)
+                .setPositiveButton("Yes"
+                ) { _, _ -> super@Main.onBackPressed() }.create().show()
+        }
     }
 
     fun showUpdatePopup(){

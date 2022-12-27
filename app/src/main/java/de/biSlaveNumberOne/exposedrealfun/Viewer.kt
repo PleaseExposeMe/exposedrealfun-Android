@@ -2,6 +2,7 @@ package de.biSlaveNumberOne.exposedrealfun
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
+import android.net.UrlQuerySanitizer
 import android.net.http.SslError
 import android.os.Bundle
 import android.os.Environment
@@ -19,12 +21,14 @@ import android.view.View
 import android.webkit.*
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.net.URISyntaxException
@@ -42,6 +46,7 @@ class Viewer : AppCompatActivity() {
     var postOpened = false
     var urlBeforeError = ""
     var disableHistory = false
+    var searchState = false
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
@@ -59,7 +64,7 @@ class Viewer : AppCompatActivity() {
             uploadMessage = null
         }
     }
-    @SuppressLint("SetJavaScriptEnabled", "Range")
+    @SuppressLint("SetJavaScriptEnabled", "Range", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
@@ -136,7 +141,10 @@ class Viewer : AppCompatActivity() {
                     finish()
                 }else if(url.contains("/download")){
                     //download the image
-                }
+                }else
+                    if (url.startsWith("https://www.exposedrealfun.com/?q=")) {
+
+                    }
                 else {
                       if (!firstLoad) {
                            loadViewer(url)
@@ -314,7 +322,7 @@ class Viewer : AppCompatActivity() {
                 CookieManager.getInstance().flush()
 
                 //JavaScript/CSS injection mobile header
-                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.d-flex { overflow: auto; }" //your css as String
+                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}.d-flex { overflow: auto; } .erf-homepage-filter-row { display: none; } .filter-dropmenu{overflow: unset;}/*custom-search-bar*/ .erf-search { position: fixed; left: 0; top: 0; right: 0; background-color: #ffffff; z-index: 99999; padding: 20px; box-shadow: 1px 1px 11px 2px #000000a8; } /*custom-search-bar end*/" //your css as String
 
                 //JavaScript/CSS injection mobile header
                 val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
@@ -456,6 +464,24 @@ class Viewer : AppCompatActivity() {
                 finish()
         }
 
+        val searchButton = findViewById<ImageView>(R.id.search2)
+        searchButton.setOnClickListener {
+            //JavaScript/CSS injection mobile header
+            var jsHeader = ""
+            if(searchState){
+                jsHeader = "document.getElementsByClassName('erf-search')[0].style.display = 'none';"
+                searchState = false
+            }else{
+                jsHeader = "document.getElementsByClassName('erf-search')[0].style.display = 'flex';"
+                searchState = true
+            }
+            webview.loadUrl(
+                "javascript:(function() {"
+                        + jsHeader +
+                        "})()"
+            )
+        }
+
         //open in default browser
         val shareButton = findViewById<ImageView>(R.id.share)
         shareButton.setOnClickListener {
@@ -516,6 +542,12 @@ class Viewer : AppCompatActivity() {
                 }
             }
         }
+        if (url.startsWith("https://www.exposedrealfun.com/?q=")) {
+            searchButton.visibility = View.VISIBLE
+            val searchValue = findViewById<TextView>(R.id.searchValue)
+            val sanitizer = UrlQuerySanitizer(url)
+            searchValue.text = sanitizer.getValue("q")
+        }
     }
 
 
@@ -528,6 +560,16 @@ class Viewer : AppCompatActivity() {
             }
             .setActionTextColor(ContextCompat.getColor(this, R.color.main_green))
             .show()
+    }
+
+    override fun onBackPressed() {
+
+        if(webview.canGoBack()){
+            webview.goBack()
+        }
+        else{
+            super@Viewer.onBackPressed()
+        }
     }
 
     fun bookmarkAdded(){
