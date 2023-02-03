@@ -322,7 +322,7 @@ class Viewer : AppCompatActivity() {
                 CookieManager.getInstance().flush()
 
                 //JavaScript/CSS injection mobile header
-                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}.d-flex { overflow: auto; } .erf-homepage-filter-row { display: none; } .filter-dropmenu{overflow: unset;}/*custom-search-bar*/ .erf-search { position: fixed; left: 0; top: 0; right: 0; background-color: #ffffff; z-index: 99999; padding: 20px; box-shadow: 1px 1px 11px 2px #000000a8; } /*custom-search-bar end*/" //your css as String
+                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}.d-flex { overflow: auto; } .erf-homepage-filter-row { display: none; } .filter-dropmenu{overflow: unset;} /*Fix comments*/ .text{overflow-wrap: break-word;} /*custom-search-bar*/ .erf-search { position: fixed; left: 0; top: 0; right: 0; background-color: #ffffff; z-index: 99999; padding: 20px; box-shadow: 1px 1px 11px 2px #000000a8; } /*custom-search-bar end*/" //your css as String
 
                 //JavaScript/CSS injection mobile header
                 val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
@@ -372,7 +372,13 @@ class Viewer : AppCompatActivity() {
                     {
                         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
                         progressBar.visibility = View.INVISIBLE
-                        webview.visibility = View.VISIBLE;
+                        webview.visibility = View.VISIBLE
+
+                        if (url?.startsWith("https://www.exposedrealfun.com/?q=") == true ) {
+                            val searchValue = findViewById<TextView>(R.id.searchValue)
+                            val sanitizer = UrlQuerySanitizer(url)
+                            searchValue.text = sanitizer.getValue("q")
+                        }
 
                         //Enable open new view on link click
                         firstLoad = false

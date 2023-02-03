@@ -213,11 +213,7 @@ class Bookmarks : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val difference = System.currentTimeMillis() - leaveTimeStemp
-        if(difference < 250 && postOpened){
-            Toast("Post is expired ")
-            val recyclerview = findViewById<RecyclerView>(R.id.historyView)
-        }
+        updateRecycleView()
         postOpened = false
     }
 
