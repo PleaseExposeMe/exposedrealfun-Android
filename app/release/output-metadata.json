@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "de.biSlaveNumberOne.exposedrealfunme",
+  "applicationId": "de.biSlaveNumberOne.exposedrealfun",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 10,
-      "versionName": "1.0.9.10",
+      "versionCode": 8,
+      "versionName": "1.0.7.8",
       "outputFile": "app-release.apk"
     }
   ],

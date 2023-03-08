@@ -80,6 +80,14 @@ class Viewer : AppCompatActivity() {
         refresh.setOnRefreshListener {
             if(webview.url == "file:///android_asset/noconnection.html"){
                 webview.loadUrl(urlBeforeError)
+            }else if(webview.url == "https://www.exposedrealfun.com/new"){
+                //Nothing
+                AlertDialog.Builder(this)
+                    .setTitle("Reload?")
+                    .setMessage("Are you sure you want to reload?")
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes"
+                    ) { _, _ -> webview.reload() }.create().show()
             }else{
                 webview.reload()
             }
@@ -473,7 +481,7 @@ class Viewer : AppCompatActivity() {
         val searchButton = findViewById<ImageView>(R.id.search2)
         searchButton.setOnClickListener {
             //JavaScript/CSS injection mobile header
-            var jsHeader = ""
+           /* var jsHeader = ""
             if(searchState){
                 jsHeader = "document.getElementsByClassName('erf-search')[0].style.display = 'none';"
                 searchState = false
@@ -485,7 +493,10 @@ class Viewer : AppCompatActivity() {
                 "javascript:(function() {"
                         + jsHeader +
                         "})()"
-            )
+            )*/
+            val intent = Intent(this, Search::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         //open in default browser
