@@ -29,11 +29,11 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-   <TextView
+    <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/colorOnPrimary"
+        android:background="?attr/backgroundClr"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/swiperefresh"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
         android:contentDescription="Upload"
         android:src="@drawable/bookmark_24"
         android:visibility="gone"
-        app:backgroundTint="@color/main_green"
+        app:backgroundTint="@color/Secondary_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints" />
@@ -111,13 +111,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:textColor="@color/main_green"
+        android:elevation="2dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/icon_color"
         app:layout_constraintBottom_toTopOf="@+id/swiperefresh"
         app:layout_constraintEnd_toStartOf="@+id/share"
         app:layout_constraintStart_toEndOf="@+id/btn"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:elevation="2dp"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

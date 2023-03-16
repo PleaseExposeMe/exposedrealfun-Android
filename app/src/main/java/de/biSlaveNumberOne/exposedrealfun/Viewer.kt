@@ -29,6 +29,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.color.DynamicColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.net.URISyntaxException
@@ -46,7 +47,6 @@ class Viewer : AppCompatActivity() {
     var postOpened = false
     var urlBeforeError = ""
     var disableHistory = false
-    var searchState = false
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
@@ -321,10 +321,12 @@ class Viewer : AppCompatActivity() {
                             + jsHeader +
                             "})()"
                 )
+
                 super.onPageStarted(view, url, favicon)
             }
 
 
+            @SuppressLint("ResourceType")
             override fun onPageFinished(webView: WebView?, url: String?) {
                 //Save cookies for login and popup
                 CookieManager.getInstance().flush()
@@ -341,6 +343,33 @@ class Viewer : AppCompatActivity() {
                             + jsHeader +
                             "})()"
                 )
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+
+                    if (DynamicColors.isDynamicColorAvailable()) {
+
+                        val mainGreenColorInt = ContextCompat.getColor(applicationContext, R.color.Primary_color)
+                        val mainGreenColorHex = java.lang.String.format("#%06X", 0xFFFFFF and mainGreenColorInt)
+
+                        val SecondaryColorInt = ContextCompat.getColor(applicationContext, R.color.Secondary_color)
+                        val SecondaryColorhex = java.lang.String.format("#%06X", 0xFFFFFF and SecondaryColorInt)
+
+                        val thirdColorInt = ContextCompat.getColor(applicationContext, R.color.Third_color)
+                        val thirdColorHex = java.lang.String.format("#%06X", 0xFFFFFF and thirdColorInt)
+
+                        //JavaScript/CSS injection mobile header
+                        val cssHeader =
+                            ".erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $thirdColorHex !important;} .erf-homepage-card{background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
+                        val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
+                                "document.getElementsByTagName('nav')[0].style.display = 'none';" +
+                                "document.head.appendChild(style);"
+                        webview.loadUrl(
+                            "javascript:(function() {"
+                                    + jsHeader +
+                                    "})()"
+                        )
+                    }
+                }
 
                 //Js Interface
                 if (url?.startsWith("https://www.exposedrealfun.com/post/") == true) {
@@ -510,7 +539,7 @@ class Viewer : AppCompatActivity() {
             shareButton.visibility = View.VISIBLE
 
             val floatingActionButton = findViewById<FloatingActionButton>(R.id.floating_action_button)
-            floatingActionButton.setColorFilter(Color.parseColor("#8C8C8C"));
+            floatingActionButton.setColorFilter(Color.parseColor("#8C8C8C"))
             floatingActionButton.visibility = View.VISIBLE
             val db = SQLlite(this, null)
             floatingActionButton.setOnClickListener {
@@ -575,7 +604,7 @@ class Viewer : AppCompatActivity() {
             .setAction("Dismiss") {
                 // Responds to click on the action
             }
-            .setActionTextColor(ContextCompat.getColor(this, R.color.main_green))
+            .setActionTextColor(ContextCompat.getColor(this, R.color.Primary_color))
             .show()
     }
 
@@ -591,11 +620,11 @@ class Viewer : AppCompatActivity() {
 
     fun bookmarkAdded(){
         val floatingActionButton = findViewById<FloatingActionButton>(R.id.floating_action_button)
-        floatingActionButton.setColorFilter(Color.parseColor("#285285"));
+        floatingActionButton.setColorFilter(ContextCompat.getColor(applicationContext, R.color.Primary_color))
     }
     fun bookmarkRemoved(){
         val floatingActionButton = findViewById<FloatingActionButton>(R.id.floating_action_button)
-        floatingActionButton.setColorFilter(Color.parseColor("#8C8C8C"));
+        floatingActionButton.setColorFilter(Color.parseColor("#8C8C8C"))
     }
 
     fun sharePost(){

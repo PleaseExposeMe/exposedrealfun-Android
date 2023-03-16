@@ -2,4 +2,5 @@
 <resources>
     <attr name="colorOnPrimary" format="color" />
     <attr name="black" format="color" />
+    <attr name="backgroundClr" format="color" />
 </resources>

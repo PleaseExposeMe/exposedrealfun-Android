@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <color name="Primary_color">@android:color/system_accent1_400</color>
+     <color name="Secondary_color">@android:color/system_accent1_200</color>
+     <color name="Third_color">@android:color/system_accent1_10</color>
+</resources>

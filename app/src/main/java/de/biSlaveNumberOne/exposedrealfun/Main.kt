@@ -33,6 +33,7 @@ import androidx.webkit.WebViewFeature
 import com.beust.klaxon.Klaxon
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.color.DynamicColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.serialization.Serializable
@@ -43,13 +44,11 @@ class Main : AppCompatActivity() {
     lateinit var webview: WebView
     var uploadMessage: ValueCallback<Array<Uri>>? = null
     val REQUEST_SELECT_FILE = 100
-    var onLogin = false
     var leaveTimeStemp =  System.currentTimeMillis()
     var postOpened = false
     var disableOnClickEvents = false
     var isUpdateAvailible = false
     var urlBeforeError = ""
-    var searchState = false
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
@@ -85,7 +84,6 @@ class Main : AppCompatActivity() {
                 progressBar.visibility = View.VISIBLE
                 webview.visibility = View.INVISIBLE
                 webview.reload()
-                searchState = false
             }
             refresh.isRefreshing = false
         }
@@ -175,6 +173,11 @@ class Main : AppCompatActivity() {
                         webview.stopLoading()
                         return false
                     } else
+                        if(url.startsWith("https://www.exposedrealfun.com/?tags")){
+                            loadViewer(url)
+                            webview.stopLoading()
+                            return false
+                        }else
                     if (url.startsWith("https://www.exposedrealfun.com/?")) {
 
                     } else
@@ -342,9 +345,19 @@ class Main : AppCompatActivity() {
 
                 webview.visibility = View.INVISIBLE
 
+                if(url == "https://www.exposedrealfun.com/fag-of-the-day" || url == "https://www.exposedrealfun.com/" ){
+                    webview.clearHistory()
+                }
+
                 if(url == "https://www.exposedrealfun.com/" || url?.startsWith("https://www.exposedrealfun.com/?") == true){
                     disableOnClickEvents = true
                     bottomNavigationView.selectedItemId = R.id.home
+                    disableOnClickEvents = false
+                }else
+                if(url == "https://www.exposedrealfun.com/fag-of-the-day"){
+                    val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+                    disableOnClickEvents = true
+                    bottomNavigationView.selectedItemId = R.id.FagOfTheDay
                     disableOnClickEvents = false
                 }
 
@@ -352,6 +365,7 @@ class Main : AppCompatActivity() {
             }
 
 
+            @SuppressLint("ResourceType")
             override fun onPageFinished(webView: WebView?, url: String?) {
                 //Save cookies for login and popup
                 CookieManager.getInstance().flush()
@@ -367,6 +381,53 @@ class Main : AppCompatActivity() {
                             + jsHeader +
                             "})()"
                 )
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+
+                    if (DynamicColors.isDynamicColorAvailable()) {
+
+                        val mainGreenColorInt = ContextCompat.getColor(applicationContext, R.color.Primary_color)
+                        val mainGreenColorHex = java.lang.String.format("#%06X", 0xFFFFFF and mainGreenColorInt)
+
+                        val SecondaryColorInt = ContextCompat.getColor(applicationContext, R.color.Secondary_color)
+                        val SecondaryColorhex = java.lang.String.format("#%06X", 0xFFFFFF and SecondaryColorInt)
+
+                        val thirdColorInt = ContextCompat.getColor(applicationContext, R.color.Third_color)
+                        val thirdColorHex = java.lang.String.format("#%06X", 0xFFFFFF and thirdColorInt)
+
+                        //JavaScript/CSS injection mobile header
+                        val cssHeader =
+                            ".erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $thirdColorHex !important;} .erf-homepage-card{ background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
+                        val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
+                                "document.getElementsByTagName('nav')[0].style.display = 'none';" +
+                                "document.head.appendChild(style);"
+                        webview.loadUrl(
+                            "javascript:(function() {"
+                                    + jsHeader +
+                                    "})()"
+                        )
+
+                        when (applicationContext.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+                            Configuration.UI_MODE_NIGHT_YES -> {
+                                //JavaScript/CSS injection mobile header
+                                val cssHeader =
+                                    ".erf-homepage-card{ box-shadow: 0 2px 14px 4px #111111;}" //your css as String
+                                val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
+                                        "document.getElementsByTagName('nav')[0].style.display = 'none';" +
+                                        "document.head.appendChild(style);"
+                                webview.loadUrl(
+                                    "javascript:(function() {"
+                                            + jsHeader +
+                                            "})()"
+                                )
+                            }
+                        }
+                    }
+                }
+
+                if(url == "https://www.exposedrealfun.com/fag-of-the-day" || url == "https://www.exposedrealfun.com/" ){
+                    webview.clearHistory()
+                }
 
 
                 Handler(Looper.getMainLooper()).postDelayed(
@@ -384,7 +445,6 @@ class Main : AppCompatActivity() {
                     },
                     1000 // value in milliseconds
                 )
-                searchState = false
 
                 super.onPageFinished(webView, url)
             }
@@ -507,8 +567,6 @@ class Main : AppCompatActivity() {
                             webview.visibility = View.INVISIBLE
 
                             webview.loadUrl("https://www.exposedrealfun.com/")
-                            searchState = false
-                            webview.clearHistory()
                         }else{
                             updateURLBeforeError()
                             webview.loadUrl("file:///android_asset/noconnection.html")
@@ -597,7 +655,6 @@ class Main : AppCompatActivity() {
                             webview.visibility = View.INVISIBLE
 
                             webview.loadUrl("https://www.exposedrealfun.com/fag-of-the-day")
-                            searchState = false
                         }else{
                             updateURLBeforeError()
                             webview.loadUrl("file:///android_asset/noconnection.html")
@@ -617,7 +674,7 @@ class Main : AppCompatActivity() {
             .setAction("Dismiss") {
                 // Responds to click on the action
             }
-            .setActionTextColor(ContextCompat.getColor(this, R.color.main_green))
+            .setActionTextColor(ContextCompat.getColor(this, R.color.Primary_color))
             .show()
     }
 
@@ -629,7 +686,6 @@ class Main : AppCompatActivity() {
 
 
         //Update bottom nav
-
         if(url == "https://www.exposedrealfun.com/" || url?.startsWith("https://www.exposedrealfun.com/?") == true){
             val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
             disableOnClickEvents = true
@@ -648,13 +704,9 @@ class Main : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        var bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
         if(webview.canGoBack()){
             webview.goBack()
-        }else if(webview.url == "https://www.exposedrealfun.com/fag-of-the-day"){
-            bottomNavigationView.selectedItemId = R.id.home
-            webview.clearHistory()
         }
         else{
             AlertDialog.Builder(this)

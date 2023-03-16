@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.color.DynamicColors
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +18,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Activate Material3
+        if (DynamicColors.isDynamicColorAvailable()) {
+            DynamicColors.applyToActivitiesIfAvailable(application)
+        }
 
         /*
         val versionName = findViewById<TextView>(R.id.version)

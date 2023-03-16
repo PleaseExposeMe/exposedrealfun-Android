@@ -1,14 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.exposedrealfunme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.exposedrealfunme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/main_green</item>
-        <item name="colorPrimaryVariant">@color/main_green</item>
+        <item name="colorPrimary">@color/Primary_color</item>
+        <item name="colorPrimaryVariant">@color/Primary_color</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/main_green</item>
         <item name="black">@color/black</item>
-        <item name="colorSecondaryVariant">#000000</item>
+        <item name="backgroundClr">@color/white</item>
         <item name="colorOnSecondary">#285285</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/white</item>

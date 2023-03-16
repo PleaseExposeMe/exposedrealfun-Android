@@ -157,7 +157,7 @@ class History : AppCompatActivity() {
             .setAction("Dismiss") {
                 // Responds to click on the action
             }
-            .setActionTextColor(ContextCompat.getColor(this, R.color.main_green))
+            .setActionTextColor(ContextCompat.getColor(this, R.color.Primary_color))
             .show()
     }
 

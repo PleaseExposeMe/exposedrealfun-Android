@@ -1,21 +1,25 @@
 package de.biSlaveNumberOne.exposedrealfun
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
-import android.text.Selection
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.DynamicColors
 
 
 class Search : AppCompatActivity() {
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -25,9 +29,18 @@ class Search : AppCompatActivity() {
 
         UpdateRecyclinView("")
 
-        val searchBtn = findViewById<ImageView>(R.id.btn)
-        searchBtn.setOnClickListener {
-            loadViewer("https://www.exposedrealfun.com/?q="+ editText.text +"&order=creation%3Adesc")
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+
+            if (DynamicColors.isDynamicColorAvailable()) {
+                val window = window
+                window.statusBarColor = ContextCompat.getColor(this, R.color.Third_color)
+            }
+        }
+
+        //close btn
+        val btn = findViewById<ImageView>(R.id.closebtn)
+        btn.setOnClickListener {
+            finish()
         }
 
         editText.setOnKeyListener(View.OnKeyListener{v, keyCode, event ->
