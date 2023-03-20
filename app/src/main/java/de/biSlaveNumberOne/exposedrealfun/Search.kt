@@ -8,9 +8,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
-import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +20,13 @@ import com.google.android.material.color.DynamicColors
 
 
 class Search : AppCompatActivity() {
-    @SuppressLint("ResourceAsColor")
+
+    val tags : MutableList<String> = ArrayList()
+    var id = 0
+    var currentSearchValue = ""
+    var tagMode = false
+
+    @SuppressLint("ResourceAsColor", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -43,9 +50,29 @@ class Search : AppCompatActivity() {
             finish()
         }
 
+        val tagbtn = findViewById<ImageView>(R.id.tags)
+        tagbtn.setOnClickListener {
+            tagMode = !tagMode
+            if(tagMode){
+                currentSearchValue = editText.text.toString()
+                editText.setText("")
+                editText.setHint("Add a tag")
+            }else{
+                editText.setHint("Search")
+                editText.setText(currentSearchValue)
+                editText.setSelection(editText.text.length)
+            }
+        }
+
+        //   AddTag("100Days")
+
         editText.setOnKeyListener(View.OnKeyListener{v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
-                loadViewer("https://www.exposedrealfun.com/?q="+ editText.text +"&order=creation%3Adesc")
+                if(tagMode){
+                    AddTag(editText.text.toString())
+                }else{
+                    loadViewer("https://www.exposedrealfun.com/?q="+ editText.text +"&order=creation%3Adesc")
+                }
             }
             false
         })
@@ -62,6 +89,46 @@ class Search : AppCompatActivity() {
             }
         })
 
+    }
+
+    fun AddTag(tag: String){
+        tags.add(tag)
+        val tagManager = findViewById<LinearLayout>(R.id.taglist)
+        tagManager.removeAllViews()
+        val a = LinearLayout(this)
+        a.orientation = LinearLayout.HORIZONTAL
+
+        val linearLayout = LinearLayout(this)
+        linearLayout.orientation = LinearLayout.HORIZONTAL
+        for (i in tags.indices) {
+            val textView = TextView(this)
+            textView.text = tags[i]
+            textView.setPadding(40,20,40,20)
+            textView.background = ContextCompat.getDrawable(applicationContext, R.drawable.rounded_tgas)
+
+            //margin
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(20, 30, 0, 30) // setMargins(left, top, right, bottom)
+
+            textView.layoutParams = params
+            //id
+            textView.id = id
+            id++
+
+
+
+            textView.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(view: View) {
+                   // tags.removeAt(textView.id)
+                    tagManager.removeView(view)
+                }
+            })
+
+            tagManager.addView(textView)
+        }
     }
 
     fun UpdateRecyclinView(s: String){
@@ -99,7 +166,7 @@ class Search : AppCompatActivity() {
             intent.putExtra("url", url)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            finish()
+            //finish()
         }else{
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(browserIntent)

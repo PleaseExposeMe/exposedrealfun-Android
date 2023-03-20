@@ -7,4 +7,5 @@
     <color name="backgroundClr">#2E2E2E</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Third_color">#ffffff</color>
+    <color name="Background_color">#ffffff</color>
 </resources>

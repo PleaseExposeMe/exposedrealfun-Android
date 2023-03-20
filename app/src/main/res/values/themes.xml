@@ -10,7 +10,7 @@
         <item name="backgroundClr">@color/white</item>
         <item name="colorOnSecondary">#285285</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/Background_color</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="android:windowAnimationStyle">@style/YourAnimation.Activity</item>

@@ -6,47 +6,10 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/icon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="51dp"
-            android:layout_height="51dp"
-            android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/update_24" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/headline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingStart="8dp"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:paddingRight="8dp"
-            android:text="A new App update is available!"
-            android:textColor="?attr/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
         android:padding="8dp">
@@ -59,7 +22,7 @@
             android:paddingEnd="8dp"
             android:paddingRight="8dp"
             android:paddingBottom="8dp"
-            android:text="A new version of the app is available. Please update the app for a better user experience."
+            android:text="Select the filter for searching"
             android:textColor="?attr/black"
             android:textSize="18sp" />
     </LinearLayout>
@@ -78,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:padding="8dp"
-            android:text="Get the Update"
+            android:text="Search Mode"
             android:textColor="?attr/black" />
     </LinearLayout>
 
@@ -97,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:padding="8dp"
-            android:text="Dismiss"
+            android:text="Tag Mode"
             android:textColor="?attr/black" />
 
     </LinearLayout>

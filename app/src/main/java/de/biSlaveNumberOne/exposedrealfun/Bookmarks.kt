@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
 class Bookmarks : AppCompatActivity() {
@@ -24,7 +26,6 @@ class Bookmarks : AppCompatActivity() {
     val Posts: MutableList<String> = ArrayList()
     val Posts_URL: MutableList<String> = ArrayList()
 
-    var delete = false
     var leaveTimeStemp =  System.currentTimeMillis()
     var postOpened = false
 
@@ -34,6 +35,14 @@ class Bookmarks : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bookmarks)
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+
+            if (DynamicColors.isDynamicColorAvailable()) {
+                val window = window
+                window.statusBarColor = ContextCompat.getColor(this, R.color.Background_color)
+            }
+        }
 
         val db = SQLlite(this, null)
 
@@ -77,19 +86,21 @@ class Bookmarks : AppCompatActivity() {
         recyclerview.layoutManager = LinearLayoutManager(this)
 
         // This will pass the ArrayList to our Adapter
-        val adapter = CustomAdapter(Title)
+        val adapter = CustomAdapterBookmarks(Title)
 
-        adapter.setOnItemClickListener(object : CustomAdapter.onItemClickListner{
+        adapter.setOnItemClickListener(object : CustomAdapterBookmarks.onItemClickListner{
             override fun onItemClick(position: Int){
-
-                if(delete){
-                    currentSelectedBookmark = position
-                    deleteBookmark(position)
-                }else{
-                    loadViewer(Link[position])
-                }
+               loadViewer(Link[position])
             }
         })
+
+        adapter.setOnLongClickListener(object : CustomAdapterBookmarks.onLongClickListner{
+            override fun onLongClick(position: Int){
+                currentSelectedBookmark = position
+                deleteBookmark(position)
+            }
+        })
+
 
         // Setting the Adapter with the recyclerview
         recyclerview.adapter = adapter
@@ -104,17 +115,6 @@ class Bookmarks : AppCompatActivity() {
                 finish()
         }
 
-        val deleteBtn = findViewById<ImageView>(R.id.delete)
-        deleteBtn.setOnClickListener {
-            val msg = findViewById<TextView>(R.id.msg)
-            if(delete){
-                delete = false
-                msg.visibility = View.GONE
-            }else{
-                delete = true
-                msg.visibility = View.VISIBLE
-            }
-        }
 
         val export = findViewById<ImageView>(R.id.export)
         export.setOnClickListener {
@@ -173,7 +173,7 @@ class Bookmarks : AppCompatActivity() {
 
     fun deleteBookmark(position : Int){
         val db = SQLlite(this, null)
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this, R.drawable.rounded_dialog)
             .setTitle("Are you sure you want to delete the bookmark " + Title[position] +"?")
             .setNegativeButton("No", null)
             .setPositiveButton(

@@ -3,4 +3,5 @@
      <color name="Primary_color">@android:color/system_accent1_400</color>
      <color name="Secondary_color">@android:color/system_accent1_200</color>
      <color name="Third_color">@android:color/system_accent1_10</color>
+     <color name="Background_color">@android:color/system_accent1_10</color>
 </resources>

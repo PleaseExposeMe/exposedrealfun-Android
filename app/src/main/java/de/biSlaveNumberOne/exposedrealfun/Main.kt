@@ -5,7 +5,6 @@ package de.biSlaveNumberOne.exposedrealfun
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -34,6 +33,7 @@ import com.beust.klaxon.Klaxon
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.color.DynamicColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.serialization.Serializable
@@ -372,7 +372,7 @@ class Main : AppCompatActivity() {
 
 
                 //JavaScript/CSS injection mobile header
-                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}.d-flex { overflow: auto; } .filter-dropmenu{overflow: unset;} .filter-menu{display: none;} /*Fix comments*/ .text{overflow-wrap: break-word;} /*custom-search-bar*/ .erf-search { position: fixed; left: 0; top: 0; right: 0; background-color: #ffffff; z-index: 99999; padding: 20px; box-shadow: 1px 1px 11px 2px #000000a8; } /*custom-search-bar end*/" //your css as String
+                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}.d-flex { overflow: auto; } input#report_contactInformation { line-height: 3rem; } .filter-dropmenu{overflow: unset;} .filter-menu{display: none;} /*Fix comments*/ .text{overflow-wrap: break-word;} /*custom-search-bar*/ .erf-search { position: fixed; left: 0; top: 0; right: 0; background-color: #ffffff; z-index: 99999; padding: 20px; box-shadow: 1px 1px 11px 2px #000000a8; } /*custom-search-bar end*/ button#report_submit { max-width: 90%; margin: 0 auto; display: block; } /*remove footer*/ .d-flex.justify-content-center.align-items-center.h-100.footer-col { display: none !important; } .d-flex.justify-content-end.align-items-center.h-100.footer-col { display: none !important; } .erf-footer { border: none; } /*end remove footer*/" //your css as String
                 val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
                         "document.getElementsByTagName('nav')[0].style.display = 'none';" +
                         "document.head.appendChild(style);"
@@ -395,9 +395,15 @@ class Main : AppCompatActivity() {
                         val thirdColorInt = ContextCompat.getColor(applicationContext, R.color.Third_color)
                         val thirdColorHex = java.lang.String.format("#%06X", 0xFFFFFF and thirdColorInt)
 
+                        val BackgroundColorInt = ContextCompat.getColor(applicationContext, R.color.Background_color)
+                        val BackgroundColorHex = java.lang.String.format("#%06X", 0xFFFFFF and BackgroundColorInt)
+
+                        val iconColorInt = ContextCompat.getColor(applicationContext, R.color.icon_color)
+                        val iconColorHex = java.lang.String.format("#%06X", 0xFFFFFF and iconColorInt)
+
                         //JavaScript/CSS injection mobile header
                         val cssHeader =
-                            ".erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $thirdColorHex !important;} .erf-homepage-card{ background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
+                            "a:hover { color: $mainGreenColorHex; } .select2-container--default .select2-results__option--highlighted[aria-selected]{background-color: $mainGreenColorHex;} .erf-homepage-filter-dropdown-menu, .select2-dropdown {background: $BackgroundColorHex !important;} .faq__list{background: $BackgroundColorHex !important; border: 1px solid $iconColorHex!important;} .form-check-input:focus, .form-select:focus, .form-control:focus {box-shadow: none; border-color: $iconColorHex;} input[type=text], select, textarea, .select2-container--default .select2-selection--multiple {background: $BackgroundColorHex !important;border: 1px solid $iconColorHex!important; color: $iconColorHex!important;} input[type=checkbox]{ background: $BackgroundColorHex;} .form-check-input:checked{background-color: $mainGreenColorHex; border-color: $mainGreenColorHex;} body{/*background: $BackgroundColorHex;*/} textarea.erf-postshow-comments-input{background: $BackgroundColorHex !important; border: 1px solid $iconColorHex;} .erf-postshow-comments-input, .form-control:focus {color: $iconColorHex!important;} textarea.form-control, .erf-postshow-comments .form-floating>label{color:  $iconColorHex !important;} .erf-postshow-post-tag{background: $mainGreenColorHex; color: #ffffff; padding: 10px;} .erf-postshow-post-tag:hover{color: #ffffff;} .erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} a.btn.erf-buttons-blue { line-height: 18px; } .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $SecondaryColorhex !important; color: #ffffff;} .erf-homepage-card{ background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
                         val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
                                 "document.getElementsByTagName('nav')[0].style.display = 'none';" +
                                 "document.head.appendChild(style);"
@@ -420,6 +426,19 @@ class Main : AppCompatActivity() {
                                             + jsHeader +
                                             "})()"
                                 )
+                            }
+                            Configuration.UI_MODE_NIGHT_NO -> {
+                                //JavaScript/CSS injection mobile header
+                                val cssHeader =
+                                    ".erf-homepage-card{ box-shadow: 0 2px 14px 4px #cbcbcb;}" //your css as String
+                                val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
+                                        "document.getElementsByTagName('nav')[0].style.display = 'none';" +
+                                        "document.head.appendChild(style);"
+                               /* webview.loadUrl(
+                                    "javascript:(function() {"
+                                            + jsHeader +
+                                            "})()"
+                                )*/
                             }
                         }
                     }
@@ -709,7 +728,7 @@ class Main : AppCompatActivity() {
             webview.goBack()
         }
         else{
-            AlertDialog.Builder(this)
+            MaterialAlertDialogBuilder(this, R.drawable.rounded_dialog)
                 .setTitle("Really Exit?")
                 .setMessage("Are you sure you want to exit?")
                 .setNegativeButton("No", null)
@@ -723,14 +742,14 @@ class Main : AppCompatActivity() {
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_layout_update)
 
 
-        bottomSheetDialog.findViewById<LinearLayout>(R.id.getTheUpdate)
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.searchmode)
             ?.setOnClickListener(View.OnClickListener {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/MobileAppDev451/exposedrealfun-Android"))
                 startActivity(browserIntent)
                 bottomSheetDialog.dismiss()
             })
 
-        bottomSheetDialog.findViewById<LinearLayout>(R.id.Dismiss)
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.Tagmode)
             ?.setOnClickListener(View.OnClickListener {
                 bottomSheetDialog.dismiss()
             })

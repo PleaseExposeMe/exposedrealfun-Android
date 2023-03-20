@@ -2,7 +2,6 @@ package de.biSlaveNumberOne.exposedrealfun
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -19,17 +18,16 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.webkit.*
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.color.DynamicColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.net.URISyntaxException
@@ -69,6 +67,14 @@ class Viewer : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+
+            if (DynamicColors.isDynamicColorAvailable()) {
+                val window = window
+                window.statusBarColor = ContextCompat.getColor(this, R.color.Background_color)
+            }
+        }
+
         webview = findViewById(R.id.uploadview)
         webview.settings.javaScriptEnabled = true
         webview.settings.allowFileAccess = true
@@ -82,7 +88,7 @@ class Viewer : AppCompatActivity() {
                 webview.loadUrl(urlBeforeError)
             }else if(webview.url == "https://www.exposedrealfun.com/new"){
                 //Nothing
-                AlertDialog.Builder(this)
+                MaterialAlertDialogBuilder(this, R.drawable.rounded_dialog)
                     .setTitle("Reload?")
                     .setMessage("Are you sure you want to reload?")
                     .setNegativeButton("No", null)
@@ -152,7 +158,10 @@ class Viewer : AppCompatActivity() {
                 }else
                     if (url.startsWith("https://www.exposedrealfun.com/?q=")) {
 
-                    }
+                    }else
+                        if (url.startsWith("https://www.exposedrealfun.com/?tags")) {
+
+                        }
                 else {
                       if (!firstLoad) {
                            loadViewer(url)
@@ -332,7 +341,7 @@ class Viewer : AppCompatActivity() {
                 CookieManager.getInstance().flush()
 
                 //JavaScript/CSS injection mobile header
-                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}.d-flex { overflow: auto; } .erf-homepage-filter-row { display: none; } .filter-dropmenu{overflow: unset;} /*Fix comments*/ .text{overflow-wrap: break-word;} /*custom-search-bar*/ .erf-search { position: fixed; left: 0; top: 0; right: 0; background-color: #ffffff; z-index: 99999; padding: 20px; box-shadow: 1px 1px 11px 2px #000000a8; } /*custom-search-bar end*/" //your css as String
+                val cssHeader = "html{-webkit-tap-highlight-color: transparent;}.erf-homepage-pagination{overflow: auto;}.d-flex { overflow: auto; } input#report_contactInformation { line-height: 3rem; } .filter-dropmenu{overflow: unset;} .filter-menu{display: none;} /*Fix comments*/ .text{overflow-wrap: break-word;} /*custom-search-bar*/ .erf-search { position: fixed; left: 0; top: 0; right: 0; background-color: #ffffff; z-index: 99999; padding: 20px; box-shadow: 1px 1px 11px 2px #000000a8; } /*custom-search-bar end*/ button#report_submit { max-width: 90%; margin: 0 auto; display: block; } /*remove footer*/ .d-flex.justify-content-center.align-items-center.h-100.footer-col { display: none !important; } .d-flex.justify-content-end.align-items-center.h-100.footer-col { display: none !important; } .erf-footer { border: none; } /*end remove footer*/" //your css as String
 
                 //JavaScript/CSS injection mobile header
                 val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
@@ -357,9 +366,15 @@ class Viewer : AppCompatActivity() {
                         val thirdColorInt = ContextCompat.getColor(applicationContext, R.color.Third_color)
                         val thirdColorHex = java.lang.String.format("#%06X", 0xFFFFFF and thirdColorInt)
 
+                        val BackgroundColorInt = ContextCompat.getColor(applicationContext, R.color.Background_color)
+                        val BackgroundColorHex = java.lang.String.format("#%06X", 0xFFFFFF and BackgroundColorInt)
+
+                        val iconColorInt = ContextCompat.getColor(applicationContext, R.color.icon_color)
+                        val iconColorHex = java.lang.String.format("#%06X", 0xFFFFFF and iconColorInt)
+
                         //JavaScript/CSS injection mobile header
                         val cssHeader =
-                            ".erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $thirdColorHex !important;} .erf-homepage-card{background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
+                            "a:hover { color: $mainGreenColorHex; } .select2-container--default .select2-results__option--highlighted[aria-selected]{background-color: $mainGreenColorHex;} .erf-homepage-filter-dropdown-menu, .select2-dropdown {background: $BackgroundColorHex !important;} .faq__list{background: $BackgroundColorHex !important; border: 1px solid $iconColorHex!important;} .form-check-input:focus, .form-select:focus, .form-control:focus {box-shadow: none; border-color: $iconColorHex;} input[type=text], select, textarea, .select2-container--default .select2-selection--multiple {background: $BackgroundColorHex !important;border: 1px solid $iconColorHex!important; color: $iconColorHex!important;} input[type=checkbox]{ background: $BackgroundColorHex;} .form-check-input:checked{background-color: $mainGreenColorHex; border-color: $mainGreenColorHex;} body{background: $BackgroundColorHex;} textarea.erf-postshow-comments-input{background: $BackgroundColorHex !important; border: 1px solid $iconColorHex;} .erf-postshow-comments-input, .form-control:focus {color: $iconColorHex!important;} textarea.form-control, .erf-postshow-comments .form-floating>label{color:  $iconColorHex !important;} .erf-postshow-post-tag{background: $mainGreenColorHex; color: #ffffff; padding: 10px;} .erf-postshow-post-tag:hover{color: #ffffff;} .erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} a.btn.erf-buttons-blue { line-height: 18px; } .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $SecondaryColorhex !important; color: #ffffff;} .erf-homepage-card{ background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
                         val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
                                 "document.getElementsByTagName('nav')[0].style.display = 'none';" +
                                 "document.head.appendChild(style);"
@@ -534,12 +549,48 @@ class Viewer : AppCompatActivity() {
             sharePost()
         }
 
+
+        //filter menu
+        val filter = findViewById<ImageView>(R.id.filter)
+        filter.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(this)
+            bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_searchmode)
+
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.searchmode)
+                ?.setOnClickListener(View.OnClickListener {
+                    if(!url.startsWith("https://www.exposedrealfun.com/?q=")){
+                        val sanitizer = UrlQuerySanitizer(url)
+                        webview.loadUrl("https://www.exposedrealfun.com/?q=" + sanitizer.getValue("tags%5Btags%5D%5B%5D"))
+                    }
+                    bottomSheetDialog.dismiss()
+                })
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.Tagmode)
+                ?.setOnClickListener(View.OnClickListener {
+                    if(!url.startsWith("https://www.exposedrealfun.com/?tags%5Btags%5D%5B%5D=")){
+                        val sanitizer = UrlQuerySanitizer(url)
+                        webview.loadUrl("https://www.exposedrealfun.com/?tags%5Btags%5D%5B%5D=" + sanitizer.getValue("q"))
+                    }
+                    bottomSheetDialog.dismiss()
+                })
+
+            bottomSheetDialog.show()
+        }
+
+
+        if(url.startsWith("https://www.exposedrealfun.com/?q=") || url.startsWith("https://www.exposedrealfun.com/?tags")){
+            //filter.visibility = View.VISIBLE
+        }else{
+            filter.visibility = View.GONE
+        }
+
         //enable open in default browser
         if (url.startsWith("https://www.exposedrealfun.com/post/")) {
             shareButton.visibility = View.VISIBLE
 
             val floatingActionButton = findViewById<FloatingActionButton>(R.id.floating_action_button)
-            floatingActionButton.setColorFilter(Color.parseColor("#8C8C8C"))
+            floatingActionButton.setColorFilter(Color.parseColor("#d1d1d1"))
             floatingActionButton.visibility = View.VISIBLE
             val db = SQLlite(this, null)
             floatingActionButton.setOnClickListener {
@@ -624,7 +675,7 @@ class Viewer : AppCompatActivity() {
     }
     fun bookmarkRemoved(){
         val floatingActionButton = findViewById<FloatingActionButton>(R.id.floating_action_button)
-        floatingActionButton.setColorFilter(Color.parseColor("#8C8C8C"))
+        floatingActionButton.setColorFilter(Color.parseColor("#d1d1d1"))
     }
 
     fun sharePost(){

@@ -10,25 +10,11 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="?attr/backgroundClr"
+        android:background="@color/Background_color"
         android:elevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/msg"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:background="@color/Primary_color"
-        android:text="\n Bookmark delete mode is active. "
-        android:textAlignment="center"
-        android:textColor="?attr/colorOnPrimary"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
         android:id="@+id/btn"
@@ -42,24 +28,13 @@
         app:srcCompat="@drawable/arrow_back_24" />
 
     <ImageView
-        android:id="@+id/delete"
-        android:layout_width="30dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="15dp"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/delete_24" />
-
-    <ImageView
         android:id="@+id/export"
         android:layout_width="30dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="20dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/delete"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/share_24" />
@@ -72,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/msg">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -83,8 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/msg" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView2"

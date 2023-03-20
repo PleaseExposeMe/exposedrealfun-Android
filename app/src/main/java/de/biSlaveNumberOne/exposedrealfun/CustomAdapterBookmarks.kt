@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter(private val dataSet: MutableList<String>) :
-    RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapterBookmarks(private val dataSet: MutableList<String>) :
+    RecyclerView.Adapter<CustomAdapterBookmarks.ViewHolder>() {
 
-    private lateinit var mListner: onItemClickListner
+    private lateinit var mListnerClick: onItemClickListner
+    private lateinit var mListnerLong: onLongClickListner
 
     interface onItemClickListner{
 
@@ -17,19 +18,30 @@ class CustomAdapter(private val dataSet: MutableList<String>) :
 
     }
 
+    interface onLongClickListner{
 
+            fun onLongClick(pos: Int) {
+
+            }
+
+
+    }
 
     fun setOnItemClickListener(listener: onItemClickListner){
 
-        mListner = listener
+        mListnerClick = listener
 
+    }
+
+    fun setOnLongClickListener(listener: onLongClickListner) {
+        mListnerLong = listener
     }
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    class ViewHolder(view: View, listener: onItemClickListner) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, listener: onItemClickListner, listenerLong: onLongClickListner) : RecyclerView.ViewHolder(view) {
         val textView: TextView
 
 
@@ -39,10 +51,10 @@ class CustomAdapter(private val dataSet: MutableList<String>) :
             view.setOnClickListener {
                 listener.onItemClick(adapterPosition)
             }
-           /* view.setOnLongClickListener {
-               // listenerLong.onLongClick(3)
-
-            }*/
+            view.setOnLongClickListener {
+                listenerLong.onLongClick(adapterPosition)
+                true
+            }
         }
     }
 
@@ -52,7 +64,7 @@ class CustomAdapter(private val dataSet: MutableList<String>) :
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.text_row_item, viewGroup, false)
 
-        return ViewHolder(view, mListner)
+        return ViewHolder(view, mListnerClick, mListnerLong)
     }
 
     // Replace the contents of a view (invoked by the layout manager)

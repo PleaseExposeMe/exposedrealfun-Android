@@ -14,11 +14,11 @@
         android:elevation="2dp"
         android:ems="10"
         android:hint="Search"
-        android:inputType="textPersonName"
         android:imeOptions="actionSearch"
+        android:inputType="textPersonName"
         android:padding="10dp"
         android:paddingStart="60dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="60dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <ImageView
         android:id="@+id/closebtn"
@@ -45,5 +45,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/input"
         app:srcCompat="@drawable/arrow_back_24" />
+
+    <ImageView
+        android:id="@+id/tags"
+        android:layout_width="30dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="20dp"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/input"
+        app:layout_constraintEnd_toEndOf="@+id/input"
+        app:layout_constraintTop_toTopOf="@+id/input"
+        app:srcCompat="@drawable/baseline_sell_24" />
+
+    <HorizontalScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/Third_color"
+        android:elevation="2dp"
+        android:fadingEdge="horizontal"
+        android:scrollbars="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input">
+
+        <LinearLayout
+            android:id="@+id/taglist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

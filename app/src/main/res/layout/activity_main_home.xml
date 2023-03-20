@@ -10,7 +10,7 @@
         android:id="@+id/textView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/backgroundClr"
+        android:background="@color/Background_color"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/swiperefresh"
         app:layout_constraintEnd_toEndOf="parent"

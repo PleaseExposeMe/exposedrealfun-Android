@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.DynamicColors
 import com.google.android.material.snackbar.Snackbar
 
 class History : AppCompatActivity() {
@@ -28,6 +29,14 @@ class History : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
 
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+
+            if (DynamicColors.isDynamicColorAvailable()) {
+                val window = window
+                window.statusBarColor = ContextCompat.getColor(this, R.color.Background_color)
+            }
+        }
 
         val db = SQLlite(this, null)
 
