@@ -67,14 +67,6 @@ class Viewer : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-
-            if (DynamicColors.isDynamicColorAvailable()) {
-                val window = window
-                window.statusBarColor = ContextCompat.getColor(this, R.color.Background_color)
-            }
-        }
-
         webview = findViewById(R.id.uploadview)
         webview.settings.javaScriptEnabled = true
         webview.settings.allowFileAccess = true
@@ -155,13 +147,11 @@ class Viewer : AppCompatActivity() {
                     finish()
                 }else if(url.contains("/download")){
                     //download the image
-                }else
-                    if (url.startsWith("https://www.exposedrealfun.com/?q=")) {
+                }else if (url.startsWith("https://www.exposedrealfun.com/?q=")) {
 
-                    }else
-                        if (url.startsWith("https://www.exposedrealfun.com/?tags")) {
+                }else if (url.contains("tags") && url.contains("?")) {
 
-                        }
+                }
                 else {
                       if (!firstLoad) {
                            loadViewer(url)
@@ -331,6 +321,27 @@ class Viewer : AppCompatActivity() {
                             "})()"
                 )
 
+                val floatingActionButton = findViewById<FloatingActionButton>(R.id.floating_action_button)
+                val searchButton = findViewById<ImageView>(R.id.search2)
+                val shareButton = findViewById<ImageView>(R.id.share)
+
+                if (url != null) {
+                    if (url.startsWith("https://www.exposedrealfun.com/post/") && !url.contains("/report")) {
+                        shareButton.visibility = View.VISIBLE
+                        floatingActionButton.visibility = View.VISIBLE
+                    }else{
+                        floatingActionButton.visibility = View.GONE
+                        shareButton.visibility = View.GONE
+                    }
+                }
+                if (url != null) {
+                    if (url.startsWith("https://www.exposedrealfun.com/?q=") || url.startsWith("https://www.exposedrealfun.com/?tags")) {
+                        searchButton.visibility = View.VISIBLE
+                    }else{
+                        searchButton.visibility = View.GONE
+                    }
+                }
+
                 super.onPageStarted(view, url, favicon)
             }
 
@@ -353,9 +364,7 @@ class Viewer : AppCompatActivity() {
                             "})()"
                 )
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
 
-                    if (DynamicColors.isDynamicColorAvailable()) {
 
                         val mainGreenColorInt = ContextCompat.getColor(applicationContext, R.color.Primary_color)
                         val mainGreenColorHex = java.lang.String.format("#%06X", 0xFFFFFF and mainGreenColorInt)
@@ -373,18 +382,17 @@ class Viewer : AppCompatActivity() {
                         val iconColorHex = java.lang.String.format("#%06X", 0xFFFFFF and iconColorInt)
 
                         //JavaScript/CSS injection mobile header
-                        val cssHeader =
-                            "a:hover { color: $mainGreenColorHex; } .select2-container--default .select2-results__option--highlighted[aria-selected]{background-color: $mainGreenColorHex;} .erf-homepage-filter-dropdown-menu, .select2-dropdown {background: $BackgroundColorHex !important;} .faq__list{background: $BackgroundColorHex !important; border: 1px solid $iconColorHex!important;} .form-check-input:focus, .form-select:focus, .form-control:focus {box-shadow: none; border-color: $iconColorHex;} input[type=text], select, textarea, .select2-container--default .select2-selection--multiple {background: $BackgroundColorHex !important;border: 1px solid $iconColorHex!important; color: $iconColorHex!important;} input[type=checkbox]{ background: $BackgroundColorHex;} .form-check-input:checked{background-color: $mainGreenColorHex; border-color: $mainGreenColorHex;} body{background: $BackgroundColorHex;} textarea.erf-postshow-comments-input{background: $BackgroundColorHex !important; border: 1px solid $iconColorHex;} .erf-postshow-comments-input, .form-control:focus {color: $iconColorHex!important;} textarea.form-control, .erf-postshow-comments .form-floating>label{color:  $iconColorHex !important;} .erf-postshow-post-tag{background: $mainGreenColorHex; color: #ffffff; padding: 10px;} .erf-postshow-post-tag:hover{color: #ffffff;} .erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} a.btn.erf-buttons-blue { line-height: 18px; } .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $SecondaryColorhex !important; color: #ffffff;} .erf-homepage-card{ background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
-                        val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
+                        val cssHeader_m3 =
+                            "a:hover { color: $mainGreenColorHex; } .select2-container--default .select2-results__option--highlighted[aria-selected]{background-color: $mainGreenColorHex;} .erf-homepage-filter-dropdown-menu, .select2-dropdown {background: $BackgroundColorHex !important;} .faq__list{background: $BackgroundColorHex !important; border: 1px solid $mainGreenColorHex!important;} .form-check-input:focus, .form-select:focus, .form-control:focus {box-shadow: none; border: none;} input[type=text], select, textarea, .select2-container--default .select2-selection--multiple {background: $BackgroundColorHex !important;border: none!important; color: $iconColorHex!important;} input[type=checkbox]{ background: $BackgroundColorHex;} .form-check-input:checked{background-color: $mainGreenColorHex; border-color: $mainGreenColorHex;} body{background: $thirdColorHex;} textarea.erf-postshow-comments-input{background: $BackgroundColorHex !important; border: none;} .erf-postshow-comments-input, .form-control:focus {color: $iconColorHex!important;} textarea.form-control, .erf-postshow-comments .form-floating>label{color:  $iconColorHex !important;} .erf-postshow-post-tag{background: $mainGreenColorHex; color: #ffffff; padding: 10px;} .erf-postshow-post-tag:hover{color: #ffffff;} .erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} a.btn.erf-buttons-blue { line-height: 18px; } .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $SecondaryColorhex !important; color: #ffffff;} .erf-homepage-card{ background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
+                        val jsHeader_m3 = "var style = document.createElement('style'); style.innerHTML = '$cssHeader_m3'; " +
                                 "document.getElementsByTagName('nav')[0].style.display = 'none';" +
                                 "document.head.appendChild(style);"
                         webview.loadUrl(
                             "javascript:(function() {"
-                                    + jsHeader +
+                                    + jsHeader_m3 +
                                     "})()"
                         )
-                    }
-                }
+
 
                 //Js Interface
                 if (url?.startsWith("https://www.exposedrealfun.com/post/") == true) {
@@ -429,7 +437,13 @@ class Viewer : AppCompatActivity() {
                         if (url?.startsWith("https://www.exposedrealfun.com/?q=") == true ) {
                             val searchValue = findViewById<TextView>(R.id.searchValue)
                             val sanitizer = UrlQuerySanitizer(url)
-                            searchValue.text = sanitizer.getValue("q")
+                            var title = sanitizer.getValue("q")
+                            try{
+                                title = title.replace("_"," ");
+                            }catch (_: Exception){
+
+                            }
+                            searchValue.text = title
                         }
 
                         //Enable open new view on link click
@@ -586,12 +600,10 @@ class Viewer : AppCompatActivity() {
         }
 
         //enable open in default browser
-        if (url.startsWith("https://www.exposedrealfun.com/post/")) {
-            shareButton.visibility = View.VISIBLE
+        if (url.startsWith("https://www.exposedrealfun.com/post/") && !url.contains("/report")) {
 
             val floatingActionButton = findViewById<FloatingActionButton>(R.id.floating_action_button)
             floatingActionButton.setColorFilter(Color.parseColor("#d1d1d1"))
-            floatingActionButton.visibility = View.VISIBLE
             val db = SQLlite(this, null)
             floatingActionButton.setOnClickListener {
                 if(bookmarkBtnState) {
@@ -640,10 +652,15 @@ class Viewer : AppCompatActivity() {
             }
         }
         if (url.startsWith("https://www.exposedrealfun.com/?q=")) {
-            searchButton.visibility = View.VISIBLE
             val searchValue = findViewById<TextView>(R.id.searchValue)
             val sanitizer = UrlQuerySanitizer(url)
-            searchValue.text = sanitizer.getValue("q")
+            var title = sanitizer.getValue("q")
+            try{
+                title = title.replace("_"," ");
+            }catch (_: Exception){
+
+            }
+            searchValue.text = title
         }
     }
 

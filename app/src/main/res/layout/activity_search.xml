@@ -10,7 +10,7 @@
         android:id="@+id/input"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="@color/Third_color"
+        android:background="@color/Background_color"
         android:elevation="2dp"
         android:ems="10"
         android:hint="Search"
@@ -60,11 +60,12 @@
     <HorizontalScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/Third_color"
+        android:layout_height="wrap_content"
+        android:background="@color/Background_color"
         android:elevation="2dp"
         android:fadingEdge="horizontal"
         android:scrollbars="horizontal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input">
@@ -73,7 +74,9 @@
             android:id="@+id/taglist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:paddingStart="15dp"
+            android:paddingEnd="20dp" />
     </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

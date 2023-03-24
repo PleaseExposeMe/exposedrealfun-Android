@@ -2,21 +2,21 @@ package de.biSlaveNumberOne.exposedrealfun
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.inputmethod.EditorInfo
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.DynamicColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class Search : AppCompatActivity() {
@@ -40,7 +40,7 @@ class Search : AppCompatActivity() {
 
             if (DynamicColors.isDynamicColorAvailable()) {
                 val window = window
-                window.statusBarColor = ContextCompat.getColor(this, R.color.Third_color)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.Background_color)
             }
         }
 
@@ -56,26 +56,50 @@ class Search : AppCompatActivity() {
             if(tagMode){
                 currentSearchValue = editText.text.toString()
                 editText.setText("")
+                editText.setImeOptions(EditorInfo.IME_ACTION_DONE)
                 editText.setHint("Add a tag")
             }else{
                 editText.setHint("Search")
+                editText.setImeOptions(EditorInfo.IME_ACTION_SEARCH)
                 editText.setText(currentSearchValue)
                 editText.setSelection(editText.text.length)
             }
         }
 
-        //   AddTag("100Days")
-
         editText.setOnKeyListener(View.OnKeyListener{v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
-                if(tagMode){
-                    AddTag(editText.text.toString())
-                }else{
-                    loadViewer("https://www.exposedrealfun.com/?q="+ editText.text +"&order=creation%3Adesc")
+                if(!tagMode){
+
+                    var URL = "https://www.exposedrealfun.com/"
+
+                    //Build URL
+                    if(editText.text.isNotBlank() || editText.text.isNotEmpty()){
+                        URL = URL + "?q="+ editText.text +"&order=creation%3Adesc"
+                    }else{
+                        URL = "$URL?order=creation%3Adesc"
+                    }
+
+                    if(tags.size > 0){
+                        for (tag in tags){
+                            URL = "$URL&tags%5Btags%5D%5B%5D=$tag"
+                        }
+                    }
+
+                    loadViewer(URL)
                 }
             }
             false
         })
+
+        editText.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                AddTag(editText.text.toString())
+                editText.requestFocus()
+                editText.setText("")
+                editText.setSelection(editText.text.length)
+            }
+            false
+        }
 
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -91,7 +115,11 @@ class Search : AppCompatActivity() {
 
     }
 
+    @SuppressLint("ResourceType")
     fun AddTag(tag: String){
+        var scrollView2 = findViewById<HorizontalScrollView>(R.id.scrollView2)
+        scrollView2.visibility = View.VISIBLE
+
         tags.add(tag)
         val tagManager = findViewById<LinearLayout>(R.id.taglist)
         tagManager.removeAllViews()
@@ -103,15 +131,32 @@ class Search : AppCompatActivity() {
         for (i in tags.indices) {
             val textView = TextView(this)
             textView.text = tags[i]
-            textView.setPadding(40,20,40,20)
-            textView.background = ContextCompat.getDrawable(applicationContext, R.drawable.rounded_tgas)
 
-            //margin
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                textView.setPadding(20, 10, 20, 10)
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                params.setMargins(20, 10, 0, 10) // setMargins(left, top, right, bottom)
+            }
+            textView.background = ContextCompat.getDrawable(applicationContext, R.drawable.rounded_tgas)
+            textView.setTextColor(Color.WHITE)
+
+            //padding
+            textView.setPadding(20, 10, 20, 10)
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            params.setMargins(20, 30, 0, 30) // setMargins(left, top, right, bottom)
+            //margin
+            params.setMargins(20, 10, 0, 10) // setMargins(left, top, right, bottom)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                //padding
+                textView.setPadding(40,30,40,30)
+                //margin
+                params.setMargins(20, 0, 0, 30)
+            }
 
             textView.layoutParams = params
             //id
@@ -120,12 +165,22 @@ class Search : AppCompatActivity() {
 
 
 
-            textView.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(view: View) {
-                   // tags.removeAt(textView.id)
-                    tagManager.removeView(view)
-                }
-            })
+            textView.setOnClickListener { view -> // tags.removeAt(textView.id)
+                MaterialAlertDialogBuilder(this, R.drawable.rounded_dialog)
+                    .setTitle("Remove Tag?")
+                    .setMessage("Are you sure you want to remove the tag ${textView.text}?")
+                    .setNegativeButton("No", null)
+                    .setPositiveButton(
+                        "Yes"
+                    ) { _, _ ->
+                        tags.remove(textView.text)
+                        tagManager.removeView(view)
+                        if (tags.size == 0) {
+                            id = 0
+                            scrollView2.visibility = View.GONE
+                        }
+                    }.create().show()
+            }
 
             tagManager.addView(textView)
         }

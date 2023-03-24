@@ -382,9 +382,8 @@ class Main : AppCompatActivity() {
                             "})()"
                 )
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
 
-                    if (DynamicColors.isDynamicColorAvailable()) {
+
 
                         val mainGreenColorInt = ContextCompat.getColor(applicationContext, R.color.Primary_color)
                         val mainGreenColorHex = java.lang.String.format("#%06X", 0xFFFFFF and mainGreenColorInt)
@@ -402,14 +401,14 @@ class Main : AppCompatActivity() {
                         val iconColorHex = java.lang.String.format("#%06X", 0xFFFFFF and iconColorInt)
 
                         //JavaScript/CSS injection mobile header
-                        val cssHeader =
-                            "a:hover { color: $mainGreenColorHex; } .select2-container--default .select2-results__option--highlighted[aria-selected]{background-color: $mainGreenColorHex;} .erf-homepage-filter-dropdown-menu, .select2-dropdown {background: $BackgroundColorHex !important;} .faq__list{background: $BackgroundColorHex !important; border: 1px solid $iconColorHex!important;} .form-check-input:focus, .form-select:focus, .form-control:focus {box-shadow: none; border-color: $iconColorHex;} input[type=text], select, textarea, .select2-container--default .select2-selection--multiple {background: $BackgroundColorHex !important;border: 1px solid $iconColorHex!important; color: $iconColorHex!important;} input[type=checkbox]{ background: $BackgroundColorHex;} .form-check-input:checked{background-color: $mainGreenColorHex; border-color: $mainGreenColorHex;} body{/*background: $BackgroundColorHex;*/} textarea.erf-postshow-comments-input{background: $BackgroundColorHex !important; border: 1px solid $iconColorHex;} .erf-postshow-comments-input, .form-control:focus {color: $iconColorHex!important;} textarea.form-control, .erf-postshow-comments .form-floating>label{color:  $iconColorHex !important;} .erf-postshow-post-tag{background: $mainGreenColorHex; color: #ffffff; padding: 10px;} .erf-postshow-post-tag:hover{color: #ffffff;} .erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} a.btn.erf-buttons-blue { line-height: 18px; } .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $SecondaryColorhex !important; color: #ffffff;} .erf-homepage-card{ background: $thirdColorHex !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
-                        val jsHeader = "var style = document.createElement('style'); style.innerHTML = '$cssHeader'; " +
+                        val cssHeader_m3 =
+                            "a:hover { color: $mainGreenColorHex; } .select2-container--default .select2-results__option--highlighted[aria-selected]{background-color: $mainGreenColorHex;} .erf-homepage-filter-dropdown-menu, .select2-dropdown {background: $BackgroundColorHex !important;} .faq__list{background: $BackgroundColorHex !important; border: none!important;} .form-check-input:focus, .form-select:focus, .form-control:focus {box-shadow: none; border: none;} input[type=text], select, textarea, .select2-container--default .select2-selection--multiple {background: $BackgroundColorHex !important;border: none!important; color: $iconColorHex!important;} input[type=checkbox]{ background: $BackgroundColorHex;} .form-check-input:checked{background-color: $mainGreenColorHex; border-color: $mainGreenColorHex;} body{background: $thirdColorHex;} textarea.erf-postshow-comments-input{background: $BackgroundColorHex !important; border: none;} .erf-postshow-comments-input, .form-control:focus {color: $iconColorHex!important;} textarea.form-control, .erf-postshow-comments .form-floating>label{color:  $iconColorHex !important;} .erf-postshow-post-tag{background: $mainGreenColorHex; color: #ffffff; padding: 10px;} .erf-postshow-post-tag:hover{color: #ffffff;} .erf-buttons-blue{ box-shadow: 0 10px 20px $thirdColorHex; border-radius: 16px !important;height: 55px; line-height: 25px; background: $mainGreenColorHex;} a.btn.erf-buttons-blue { line-height: 18px; } .erf-homepage-pagination>.erf-pagination>.pag-page.active>span{background: $SecondaryColorhex !important; color: #ffffff;} .erf-homepage-card{ background: $BackgroundColorInt !important;} .erf-postshow-comments .title .counter{background: $mainGreenColorHex !important;} .bar{background: $mainGreenColorHex !important;}" //your css as String
+                        val jsHeader_m3 = "var style = document.createElement('style'); style.innerHTML = '$cssHeader_m3'; " +
                                 "document.getElementsByTagName('nav')[0].style.display = 'none';" +
                                 "document.head.appendChild(style);"
                         webview.loadUrl(
                             "javascript:(function() {"
-                                    + jsHeader +
+                                    + jsHeader_m3 +
                                     "})()"
                         )
 
@@ -441,8 +440,8 @@ class Main : AppCompatActivity() {
                                 )*/
                             }
                         }
-                    }
-                }
+
+
 
                 if(url == "https://www.exposedrealfun.com/fag-of-the-day" || url == "https://www.exposedrealfun.com/" ){
                     webview.clearHistory()

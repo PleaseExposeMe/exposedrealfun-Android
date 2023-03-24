@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.DynamicColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
 class History : AppCompatActivity() {
@@ -147,7 +148,8 @@ class History : AppCompatActivity() {
 
     fun deleteHistory(){
         val db = SQLlite(this, null)
-        AlertDialog.Builder(this)
+
+        MaterialAlertDialogBuilder(this, R.drawable.rounded_dialog)
             .setTitle("Are you sure you want to delete the history?")
             .setNegativeButton("No", null)
             .setPositiveButton(

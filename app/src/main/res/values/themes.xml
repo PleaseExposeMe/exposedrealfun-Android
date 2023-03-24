@@ -15,6 +15,19 @@
         <!-- Customize your theme here. -->
         <item name="android:windowAnimationStyle">@style/YourAnimation.Activity</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+        <item name="android:background">@color/Background_color</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/Third_color</item>
+        <item name="colorOnPrimary">@color/Secondary_color</item>
+        <item name="colorSecondaryContainer">@color/Secondary_color</item>
+        <item name="background">@color/Third_color</item>
     </style>
 
     <!--Sheet style-->

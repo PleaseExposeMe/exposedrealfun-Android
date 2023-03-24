@@ -89,6 +89,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swiperefresh"
         app:menu="@menu/bottom_nav"
+
         tools:ignore="MissingConstraints" />
 
     <ImageView

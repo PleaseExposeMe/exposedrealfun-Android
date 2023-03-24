@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         // Activate Material3
         if (DynamicColors.isDynamicColorAvailable()) {
-            DynamicColors.applyToActivitiesIfAvailable(application)
+            //DynamicColors.applyToActivitiesIfAvailable(application)
         }
 
         /*
