@@ -45,6 +45,9 @@ The most important functions:
     <th class="tg-0lax">
         <p>Post</p>
         </th>
+    <th class="tg-0lax">
+        <p>Search</p>
+        </th>
   </tr>
 </thead>
 <tbody>
@@ -60,6 +63,9 @@ The most important functions:
     </td>
     <td class="tg-0lax">
     <img src="https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/screenshots/Screenshot_4.jpg" width="250px">
+    </td>
+       <td class="tg-0lax">
+    <img src="https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/screenshots/Screenshot_5.jpg" width="250px">
     </td>
   </tr>
 </tbody>
