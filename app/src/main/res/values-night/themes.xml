@@ -21,8 +21,8 @@
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorPrimary">@color/Third_color</item>
-        <item name="colorOnPrimary">@color/Primary_color</item>
-        <item name="colorOnSurface">@color/Primary_color</item>
+        <item name="colorOnPrimary">@color/Secondary_color</item>
+        <item name="colorSecondaryContainer">@color/Secondary_color</item>
         <item name="background">@color/Third_color</item>
     </style>
 
