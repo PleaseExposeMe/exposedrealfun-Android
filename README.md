@@ -84,7 +84,7 @@ If you find a bug or have a feature request, just send an e-mail to me 😀
 [ExposeMeNowMarcel@outlook.de](mailto:ExposeMeNowMarcel@outlook.de)
 
 # License
-   Copyright 2022 biSlaveNumberOne
+   Copyright 2023 GaySlaveNumberOne
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
