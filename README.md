@@ -101,4 +101,4 @@ If you find a bug or have a feature request, just send an e-mail to me 😀
    ### Use and share the app like the boys 😏
    
 # Copyright/Trademark Information. 
-All trademarks, logos and service marks are Copyright ©2022 by exposedrealfun.com
+All trademarks, logos and service marks are Copyright ©2023 by exposedrealfun.com
