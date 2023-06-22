@@ -1,10 +1,13 @@
 # Android app for exposedrealfun.com (NSFW)
-An unofficial app for exposedrealfun.com for Android
+An unofficial app for exposedrealfun.com (shut down) for Android
+
+# Future of this app
+
+After exposedrealfun.com no longer exists, it is no longer possible to continue using the app.
+Currently I am working on an open-source solution for exposure websites. Whether this app will one day again allow the expose is currently questionable, but I try my best
 
 # Download
-Free download for Android:<br>
-[![Download](https://camo.githubusercontent.com/21c7f749956051a67b3c4d75ea771fd6a052dbdf04ea29341e3e8788f6f28134/68747470733a2f2f637573746f6d2d69636f6e2d6261646765732e6865726f6b756170702e636f6d2f62616467652f2d446f776e6c6f61642d626c75653f7374796c653d666f722d7468652d6261646765266c6f676f3d646f776e6c6f6164266c6f676f436f6c6f723d7768697465)](https://github.com/MobileAppDev451/exposedrealfun-Android/raw/main/exposedrealfun.com.apk)<br><br>
-Now with adaptive Material 3 Design
+This App is deprecated
 
 # FAQ
 
@@ -75,8 +78,8 @@ The most important functions:
 </table>
 
 # What is exposedrealfun.com?
-exposedrealfun.com is an adult picture posting site.\
-This site is meant for the male exposure community.
+exposedrealfun.com was an adult picture posting site.\
+This site was meant for the male exposure community.
 
 # Contact
 If you find a bug or have a feature request, just send an e-mail to me 😀
